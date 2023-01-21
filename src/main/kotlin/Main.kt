@@ -1,9 +1,9 @@
 fun main() {
     println("Bem vindo ao ByteBank!")
 
-    val contaDoAlex = Conta("Alex", 1000)
+    val contaDoAlex = Conta(titular = "Alex", numero = 1000)
 
-    val contaDaFran = Conta("Fran", 1234)
+    val contaDaFran = Conta(numero = 1234, titular = "Fran")
 
     println("Depositando na conta do ${contaDoAlex.titular}")
     contaDoAlex.deposita(50)
@@ -29,7 +29,7 @@ fun main() {
     println("Saldo: ${contaDaFran.saldo}, titular: ${contaDaFran.titular}")
 }
 
-class Conta(val titular: String, val numero: Int) {
+class Conta(val titular: String, val numero: Int = 0) {
     var saldo = 0.0
         private set
     //        get() {
