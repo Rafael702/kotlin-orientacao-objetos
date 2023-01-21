@@ -1,15 +1,9 @@
 fun main() {
     println("Bem vindo ao ByteBank!")
 
-    val contaDoAlex = Conta()
-    contaDoAlex.titular = "Alex"
-    contaDoAlex.numero = 1000
-    contaDoAlex.deposita(100)
+    val contaDoAlex = Conta("Alex", 1000)
 
-    val contaDaFran = Conta()
-    contaDaFran.titular = "Fran"
-    contaDaFran.numero = 1234
-    contaDaFran.deposita(110)
+    val contaDaFran = Conta("Fran", 1234)
 
     println("Depositando na conta do ${contaDoAlex.titular}")
     contaDoAlex.deposita(50)
@@ -35,10 +29,10 @@ fun main() {
     println("Saldo: ${contaDaFran.saldo}, titular: ${contaDaFran.titular}")
 }
 
-class Conta {
-    var titular = ""
-    var numero = 0
-//        get() {
+class Conta(val titular: String, val numero: Int) {
+    var saldo = 0.0
+        private set
+    //        get() {
 //            return field
 //        }
 
@@ -46,9 +40,18 @@ class Conta {
 //            field = value
 //            println(field)
 //        }
-    var saldo = 0.0
-        private set
 
+    init {
+        println("O titular é: $titular")
+    }
+
+    // O construtor pode ser colocado nos parametros da class.
+    // Fica: class Conta(val titular: String, val numero: Int){} -> Construtor primario -> Mais idiomatico
+    // Construtor secundario
+//    constructor(titular: String, numero: Int) {
+//        this.titular = titular
+//        this.numero = numero
+//    }
     fun deposita(valor: Int) {
         if (valor > 0) this.saldo += valor
     }
