@@ -12,22 +12,38 @@ fun main(args: Array<String>) {
     contaDaFran.saldo = 110.0
 
     println("Depositando na conta do ${contaDoAlex.titular}")
-    deposita(contaDoAlex, 50)
+    contaDoAlex.deposita(50)
     println("Saldo: ${contaDoAlex.saldo}")
 
     println("Depositando na conta do ${contaDaFran.titular}")
-    deposita(contaDaFran, 20)
+    contaDaFran.deposita(20)
     println("Saldo: ${contaDaFran.saldo}")
-}
 
-fun deposita(conta: Conta, valor: Int) {
-    conta.saldo += valor
+    println("Sacando valor da conta: ${contaDoAlex.numero}, titular: ${contaDoAlex.titular}")
+    contaDoAlex.saca(50)
+    println("Saldo atual: ${contaDoAlex.saldo}")
+
+    println("Sacando valor da conta: ${contaDaFran.numero}, titular: ${contaDaFran.titular}")
+    contaDaFran.saca(10)
+    println("Saldo atual: ${contaDaFran.saldo}")
 }
 
 class Conta {
     var titular = ""
     var numero = 0
     var saldo = 0.0
+
+    fun deposita(valor: Int) {
+        this.saldo += valor
+    }
+
+    fun saca(valor: Int) {
+        if (saldo >= valor) {
+            saldo -= valor
+        } else {
+            println("Saldo: $saldo")
+        }
+    }
 }
 
 fun testeLoop() {
