@@ -1,15 +1,15 @@
-fun main(args: Array<String>) {
+fun main() {
     println("Bem vindo ao ByteBank!")
 
     val contaDoAlex = Conta()
     contaDoAlex.titular = "Alex"
     contaDoAlex.numero = 1000
-    contaDoAlex.saldo = 100.0
+    contaDoAlex.deposita(100)
 
     val contaDaFran = Conta()
     contaDaFran.titular = "Fran"
     contaDaFran.numero = 1234
-    contaDaFran.saldo = 110.0
+    contaDaFran.deposita(110)
 
     println("Depositando na conta do ${contaDoAlex.titular}")
     contaDoAlex.deposita(50)
@@ -26,15 +26,31 @@ fun main(args: Array<String>) {
     println("Sacando valor da conta: ${contaDaFran.numero}, titular: ${contaDaFran.titular}")
     contaDaFran.saca(10)
     println("Saldo atual: ${contaDaFran.saldo}")
+
+    println("Transferência da conta da Fran para o Alex")
+
+    contaDaFran.transfere(200, contaDoAlex)
+
+    println("Saldo: ${contaDoAlex.saldo}, titular: ${contaDoAlex.titular}")
+    println("Saldo: ${contaDaFran.saldo}, titular: ${contaDaFran.titular}")
 }
 
 class Conta {
     var titular = ""
     var numero = 0
+//        get() {
+//            return field
+//        }
+
+    //        set(value: Int) {
+//            field = value
+//            println(field)
+//        }
     var saldo = 0.0
+        private set
 
     fun deposita(valor: Int) {
-        this.saldo += valor
+        if (valor > 0) this.saldo += valor
     }
 
     fun saca(valor: Int) {
@@ -42,6 +58,18 @@ class Conta {
             saldo -= valor
         } else {
             println("Saldo: $saldo")
+        }
+    }
+
+    fun transfere(valor: Int, contaTransferencia: Conta): Boolean {
+        return if (saldo >= valor) {
+            saldo -= valor
+            contaTransferencia.deposita(valor)
+            println("Transferência de R$ $valor para ${contaTransferencia.titular}, Concluida")
+            true
+        } else {
+            println("Falha na transferência para ${contaTransferencia.titular}")
+            false
         }
     }
 }
